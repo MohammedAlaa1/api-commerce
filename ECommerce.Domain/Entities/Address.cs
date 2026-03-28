@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ECommerce.Domain.Common;
 
-namespace ECommerce.Domain.Entities
+namespace ECommerce.Domain.Entities;
+
+public class Address : BaseEntity
 {
-    public class Address
-    {
-    }
+    public string Street { get; set; } = null!;
+    public string City { get; set; } = null!;
+    public string State { get; set; } = null!;
+    public string Country { get; set; } = null!;
+    public string PostalCode { get; set; } = null!;
+    public bool IsDefault { get; set; }
+
+    // Foreign key
+    public Guid CustomerId { get; set; }
+    public Customer Customer { get; set; } = null!;
 }

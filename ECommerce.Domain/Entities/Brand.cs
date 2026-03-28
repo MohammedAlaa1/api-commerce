@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ECommerce.Domain.Common;
 
-namespace ECommerce.Domain.Entities
+namespace ECommerce.Domain.Entities;
+
+public class Brand : BaseEntity
 {
-    internal class Brand
-    {
-    }
+    public string Name { get; set; } = null!;
+    public string? Description { get; set; }
+    public string? LogoUrl { get; set; }
+
+    // Navigation properties
+    public List<Product> Products { get; set; } = new();
 }
