@@ -1,12 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ECommerce.Domain.Common;
 
-namespace ECommerce.Domain.Entities
+namespace ECommerce.Domain.Entities;
+
+public class Cart : BaseEntity
 {
-    internal class Cart
-    {
-    }
+    // A cart belongs to one customer
+    public Guid CustomerId { get; set; }
+    public Customer Customer { get; set; } = null!;
+
+    public List<CartItem> Items { get; set; } = new();
 }

@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ECommerce.Domain.Common;
 
-namespace ECommerce.Domain.Entities
+namespace ECommerce.Domain.Entities;
+
+public class Inventory : BaseEntity
 {
-    internal class Inventory
-    {
-    }
+    public int QuantityAvailable { get; set; }
+    public int QuantityReserved { get; set; }
+    public string? WarehouseLocation { get; set; }
+
+    public Guid ProductVariantId { get; set; }
+    public ProductVariant ProductVariant { get; set; } = null!;
 }

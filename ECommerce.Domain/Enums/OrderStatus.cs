@@ -14,6 +14,6 @@ namespace ECommerce.Domain.Enums
         Shipped = 3,
         Delivered = 4,
         Canceled = 5,
-        Refunded = 6,
+        Refunded = 6,   
     }
 }

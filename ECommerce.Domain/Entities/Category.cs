@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ECommerce.Domain.Common;
 
-namespace ECommerce.Domain.Entities
+namespace ECommerce.Domain.Entities;
+
+public class Category : BaseEntity
 {
-    internal class Category
-    {
-    }
+    public string Name { get; set; } = null!;
+    public string? Description { get; set; }
+
+    public Guid? ParentCategoryId { get; set; }
+    public Category? ParentCategory { get; set; }
+    public List<Category> SubCategories { get; set; } = new();
+
+    public List<Product> Products { get; set; } = new();
 }

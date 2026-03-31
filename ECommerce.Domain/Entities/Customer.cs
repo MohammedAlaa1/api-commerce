@@ -1,12 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ECommerce.Domain.Common;
 
-namespace ECommerce.Domain.Entities
+namespace ECommerce.Domain.Entities;
+
+public class Customer : BaseEntity
 {
-    public class Customer
-    {
-    }
+    public string FirstName { get; set; } = null!;
+    public string LastName { get; set; } = null!;
+    public string Email { get; set; } = null!;
+    public string? PhoneNumber { get; set; }
+
+    public List<Address> Addresses { get; set; } = new();
+    public List<Order> Orders { get; set; } = new();
+    public List<Review> Reviews { get; set; } = new();
+    public Wishlist? Wishlist { get; set; }
+    public Cart? Cart { get; set; }
 }
