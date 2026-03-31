@@ -9,7 +9,6 @@ public class Customer : BaseEntity
     public string Email { get; set; } = null!;
     public string? PhoneNumber { get; set; }
 
-    // Navigation properties
     public List<Address> Addresses { get; set; } = new();
     public List<Order> Orders { get; set; } = new();
     public List<Review> Reviews { get; set; } = new();
