@@ -1,5 +1,7 @@
 using ECommerce.Application.Common;
 using ECommerce.Application.Features.Products.Commands.CreateProduct;
+using ECommerce.Application.Features.Products.Commands.DeleteProduct;
+using ECommerce.Application.Features.Products.Commands.UpdateProduct;
 using ECommerce.Application.Features.Products.Queries.GetAllProducts;
 using ECommerce.Application.Features.Products.Queries.GetProductById;
 using ECommerce.Application.Helpers;
@@ -39,5 +41,19 @@ public class ProductsController : ControllerBase
     {
         var result = await _mediator.Send(request);
         return Ok(ApiResponse.Success(result, LocalizerHelper.GetMessage(ProductValidationMessages.CreatedSuccessfully)));
+    }
+
+    [HttpPut]
+    public async Task<IActionResult> UpdateProduct(UpdateProductCommand request)
+    {
+        var result = await _mediator.Send(request);
+        return Ok(ApiResponse.Success(result, LocalizerHelper.GetMessage(ProductValidationMessages.UpdatedSuccessfully)));
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteProduct(Guid id)
+    {
+        var result = await _mediator.Send(new DeleteProductCommand { Id = id });
+        return Ok(ApiResponse.Success(result));
     }
 }

@@ -9,5 +9,8 @@ public enum ProductValidationMessages
     CategoryRequired,
     IdRequired,
     CreatedSuccessfully,
-    FetchedSuccessfully
+    FetchedSuccessfully,
+    ProductNotFound,
+    UpdatedSuccessfully,
+    DeletedSuccessfully
 }

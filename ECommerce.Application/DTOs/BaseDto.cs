@@ -1,9 +1,8 @@
-namespace ECommerce.Domain.Common;
+namespace ECommerce.Application.DTOs;
 
-public abstract class BaseEntity
+public abstract class BaseDto
 {
     public Guid Id { get; set; }
-    public Guid TenantId { get; set; }
     public DateTime CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public Guid? CreatedBy { get; set; }
