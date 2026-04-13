@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+
+  <data name="NameRequired" xml:space="preserve">
+    <value>Product name is required</value>
+  </data>
+  <data name="NameTooLong" xml:space="preserve">
+    <value>Product name cannot exceed 200 characters</value>
+  </data>
+  <data name="PriceInvalid" xml:space="preserve">
+    <value>Price must be greater than 0</value>
+  </data>
+  <data name="BrandRequired" xml:space="preserve">
+    <value>Brand is required</value>
+  </data>
+  <data name="CategoryRequired" xml:space="preserve">
+    <value>Category is required</value>
+  </data>
+  <data name="IdRequired" xml:space="preserve">
+    <value>Product Id is required</value>
+  </data>
+  <data name="CreatedSuccessfully" xml:space="preserve">
+    <value>Product created successfully</value>
+  </data>
+  <data name="FetchedSuccessfully" xml:space="preserve">
+    <value>Products fetched successfully</value>
+  </data>
+  <data name="ProductNotFound" xml:space="preserve">
+    <value>Product not found</value>
+  </data>
+  <data name="UpdatedSuccessfully" xml:space="preserve">
+    <value>Product updated successfully</value>
+  </data>
+  <data name="DeletedSuccessfully" xml:space="preserve">
+    <value>Product deleted successfully</value>
+  </data>
+</root>

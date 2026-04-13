@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+
+  <data name="NameRequired" xml:space="preserve">
+    <value>Category name is required</value>
+  </data>
+  <data name="NameTooLong" xml:space="preserve">
+    <value>Category name cannot exceed 200 characters</value>
+  </data>
+  <data name="IdRequired" xml:space="preserve">
+    <value>Category Id is required</value>
+  </data>
+  <data name="CategoryNotFound" xml:space="preserve">
+    <value>Category not found</value>
+  </data>
+  <data name="CreatedSuccessfully" xml:space="preserve">
+    <value>Category created successfully</value>
+  </data>
+  <data name="UpdatedSuccessfully" xml:space="preserve">
+    <value>Category updated successfully</value>
+  </data>
+  <data name="DeletedSuccessfully" xml:space="preserve">
+    <value>Category deleted successfully</value>
+  </data>
+  <data name="FetchedSuccessfully" xml:space="preserve">
+    <value>Categories fetched successfully</value>
+  </data>
+</root>
