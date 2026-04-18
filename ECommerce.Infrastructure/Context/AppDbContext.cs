@@ -1,18 +1,24 @@
 ﻿using ECommerce.Domain.Common;
 using ECommerce.Domain.Entities;
 using ECommerce.Domain.Interfaces;
+using ECommerce.Infrastructure.Identity;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
+using System.Security.Claims;
 
 namespace ECommerce.Infrastructure.Context
 {
-    public class AppDbContext : DbContext
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         private readonly ITenantService _tenantService;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public AppDbContext(DbContextOptions<AppDbContext> options, ITenantService tenantService) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options, ITenantService tenantService, IHttpContextAccessor httpContextAccessor) : base(options)
         {
             _tenantService = tenantService;
+            _httpContextAccessor = httpContextAccessor;
         }
         
         public DbSet<Product> Products { get; set; }
@@ -34,6 +40,7 @@ namespace ECommerce.Infrastructure.Context
         public DbSet<WishlistItem> WishlistItems { get; set; }
         public DbSet<Review> Reviews { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<RefreshToken> RefreshTokens { get; set; }
         public DbSet<Tenant> Tenants { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -67,6 +74,8 @@ namespace ECommerce.Infrastructure.Context
         public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         {
             var tenantId = _tenantService.GetTenantId();
+            var userIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            Guid? userId = Guid.TryParse(userIdClaim, out var parsedId) ? parsedId : null;
 
             foreach (var entry in ChangeTracker.Entries<BaseEntity>())
             {
@@ -74,11 +83,13 @@ namespace ECommerce.Infrastructure.Context
                 {
                     entry.Entity.TenantId = tenantId;
                     entry.Entity.CreatedAt = DateTime.UtcNow;
+                    entry.Entity.CreatedBy = userId;
                 }
 
                 if (entry.State == EntityState.Modified)
                 {
                     entry.Entity.UpdatedAt = DateTime.UtcNow;
+                    entry.Entity.UpdatedBy = userId;
                 }
             }
 

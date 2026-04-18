@@ -7,12 +7,14 @@ using ECommerce.Application.Features.Categories.Queries.GetCategoryById;
 using ECommerce.Application.Helpers;
 using ECommerce.Application.Resources.Categories;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class CategoriesController : ControllerBase
 {
     private readonly IMediator _mediator;
