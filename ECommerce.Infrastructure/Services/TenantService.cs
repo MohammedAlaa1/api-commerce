@@ -1,13 +1,24 @@
 using ECommerce.Domain.Interfaces;
+using Microsoft.AspNetCore.Http;
 
 namespace ECommerce.Infrastructure.Services;
 
-// Stub implementation — replace with JWT token extraction in Auth phase
 public class TenantService : ITenantService
 {
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public TenantService(IHttpContextAccessor httpContextAccessor)
+    {
+        _httpContextAccessor = httpContextAccessor;
+    }
+
     public Guid GetTenantId()
     {
-        // Hardcoded for now — will be read from JWT claims later
-        return Guid.Parse("00000000-0000-0000-0000-000000000001");
+        var tenantIdClaim = _httpContextAccessor.HttpContext?.User?.FindFirst("TenantId")?.Value;
+
+        if (string.IsNullOrEmpty(tenantIdClaim) || !Guid.TryParse(tenantIdClaim, out var tenantId))
+            return Guid.Empty;
+
+        return tenantId;
     }
 }
