@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+
+  <data name="StreetRequired" xml:space="preserve">
+    <value>Street is required</value>
+  </data>
+  <data name="CityRequired" xml:space="preserve">
+    <value>City is required</value>
+  </data>
+  <data name="StateRequired" xml:space="preserve">
+    <value>State is required</value>
+  </data>
+  <data name="CountryRequired" xml:space="preserve">
+    <value>Country is required</value>
+  </data>
+  <data name="PostalCodeRequired" xml:space="preserve">
+    <value>Postal code is required</value>
+  </data>
+  <data name="CustomerIdRequired" xml:space="preserve">
+    <value>Customer is required</value>
+  </data>
+  <data name="CreatedSuccessfully" xml:space="preserve">
+    <value>Address created successfully</value>
+  </data>
+  <data name="FetchedSuccessfully" xml:space="preserve">
+    <value>Addresses fetched successfully</value>
+  </data>
+  <data name="AddressNotFound" xml:space="preserve">
+    <value>Address not found</value>
+  </data>
+  <data name="UpdatedSuccessfully" xml:space="preserve">
+    <value>Address updated successfully</value>
+  </data>
+  <data name="DeletedSuccessfully" xml:space="preserve">
+    <value>Address deleted successfully</value>
+  </data>
+</root>
