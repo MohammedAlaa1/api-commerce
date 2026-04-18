@@ -5,3 +5,4 @@ obj/
 *.suo
 *.http
 appsettings.Development.json
+/ECommerce.Api/appsettings.Development.json
