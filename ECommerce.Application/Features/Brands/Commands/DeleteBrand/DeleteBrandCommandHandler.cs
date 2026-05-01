@@ -1,4 +1,5 @@
 using ECommerce.Application.Helpers;
+using ECommerce.Application.Interfaces;
 using ECommerce.Application.Resources.Brands;
 using ECommerce.Domain.Entities;
 using ECommerce.Domain.Interfaces;
@@ -9,10 +10,12 @@ namespace ECommerce.Application.Features.Brands.Commands.DeleteBrand;
 public class DeleteBrandCommandHandler : IRequestHandler<DeleteBrandCommand>
 {
     private readonly IRepository<Brand> _repository;
+    private readonly ICacheService _cacheService;
 
-    public DeleteBrandCommandHandler(IRepository<Brand> repository)
+    public DeleteBrandCommandHandler(IRepository<Brand> repository, ICacheService cacheService)
     {
         _repository = repository;
+        _cacheService = cacheService;
     }
 
     public async Task Handle(DeleteBrandCommand request, CancellationToken cancellationToken)
@@ -23,5 +26,6 @@ public class DeleteBrandCommandHandler : IRequestHandler<DeleteBrandCommand>
 
         _repository.Delete(brand);
         await _repository.SaveChangesAsync();
+        await _cacheService.RemoveAsync("brands_1_10");
     }
 }

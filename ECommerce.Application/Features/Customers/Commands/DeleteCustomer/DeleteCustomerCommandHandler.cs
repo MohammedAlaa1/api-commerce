@@ -1,4 +1,5 @@
 using ECommerce.Application.Helpers;
+using ECommerce.Application.Interfaces;
 using ECommerce.Application.Resources.Customers;
 using ECommerce.Domain.Entities;
 using ECommerce.Domain.Interfaces;
@@ -9,10 +10,12 @@ namespace ECommerce.Application.Features.Customers.Commands.DeleteCustomer;
 public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand>
 {
     private readonly IRepository<Customer> _repository;
+    private readonly ICacheService _cacheService;
 
-    public DeleteCustomerCommandHandler(IRepository<Customer> repository)
+    public DeleteCustomerCommandHandler(IRepository<Customer> repository, ICacheService cacheService)
     {
         _repository = repository;
+        _cacheService = cacheService;
     }
 
     public async Task Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
@@ -23,5 +26,6 @@ public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerComman
 
         _repository.Delete(customer);
         await _repository.SaveChangesAsync();
+        await _cacheService.RemoveAsync("customers_1_10");
     }
 }
