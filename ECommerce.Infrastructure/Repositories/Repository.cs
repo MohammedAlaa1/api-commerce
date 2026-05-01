@@ -44,6 +44,32 @@ public class Repository<T> : IRepository<T> where T : class
         return await query.ToListAsync();
     }
 
+    public async Task<(IEnumerable<T> Data, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize)
+    {
+        var totalCount = await _dbSet.CountAsync();
+        var data = await _dbSet
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (data, totalCount);
+    }
+
+    public async Task<(IEnumerable<T> Data, int TotalCount)> GetPagedAsync(int pageNumber, int pageSize, params Expression<Func<T, object>>[] includes)
+    {
+        IQueryable<T> query = _dbSet;
+        foreach (var include in includes)
+            query = query.Include(include);
+
+        var totalCount = await query.CountAsync();
+        var data = await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (data, totalCount);
+    }
+
     public async Task AddAsync(T entity)
     {
         await _dbSet.AddAsync(entity);

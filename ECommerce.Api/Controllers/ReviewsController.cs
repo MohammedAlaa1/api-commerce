@@ -25,9 +25,9 @@ public class ReviewsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
-        var result = await _mediator.Send(new GetAllReviewsQuery());
+        var result = await _mediator.Send(new GetAllReviewsQuery { PageNumber = pageNumber, PageSize = pageSize });
         return Ok(ApiResponse.Success(result, LocalizerHelper.GetMessage(ReviewValidationMessages.FetchedSuccessfully)));
     }
 

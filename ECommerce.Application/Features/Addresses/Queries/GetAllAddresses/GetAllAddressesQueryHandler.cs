@@ -1,4 +1,5 @@
 using AutoMapper;
+using ECommerce.Application.Common;
 using ECommerce.Application.DTOs;
 using ECommerce.Domain.Entities;
 using ECommerce.Domain.Interfaces;
@@ -6,7 +7,7 @@ using MediatR;
 
 namespace ECommerce.Application.Features.Addresses.Queries.GetAllAddresses;
 
-public class GetAllAddressesQueryHandler : IRequestHandler<GetAllAddressesQuery, IEnumerable<AddressDto>>
+public class GetAllAddressesQueryHandler : IRequestHandler<GetAllAddressesQuery, PaginatedResult<AddressDto>>
 {
     private readonly IRepository<Address> _repository;
     private readonly IMapper _mapper;
@@ -17,9 +18,16 @@ public class GetAllAddressesQueryHandler : IRequestHandler<GetAllAddressesQuery,
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<AddressDto>> Handle(GetAllAddressesQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<AddressDto>> Handle(GetAllAddressesQuery request, CancellationToken cancellationToken)
     {
-        var addresses = await _repository.GetAllAsync();
-        return _mapper.Map<IEnumerable<AddressDto>>(addresses);
+        var (data, totalCount) = await _repository.GetPagedAsync(request.PageNumber, request.PageSize);
+
+        return new PaginatedResult<AddressDto>
+        {
+            Data = _mapper.Map<IEnumerable<AddressDto>>(data),
+            PageNumber = request.PageNumber,
+            PageSize = request.PageSize,
+            TotalCount = totalCount
+        };
     }
 }

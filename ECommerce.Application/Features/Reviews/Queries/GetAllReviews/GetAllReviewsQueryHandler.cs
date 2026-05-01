@@ -1,4 +1,5 @@
 using AutoMapper;
+using ECommerce.Application.Common;
 using ECommerce.Application.DTOs;
 using ECommerce.Domain.Entities;
 using ECommerce.Domain.Interfaces;
@@ -6,7 +7,7 @@ using MediatR;
 
 namespace ECommerce.Application.Features.Reviews.Queries.GetAllReviews;
 
-public class GetAllReviewsQueryHandler : IRequestHandler<GetAllReviewsQuery, IEnumerable<ReviewDto>>
+public class GetAllReviewsQueryHandler : IRequestHandler<GetAllReviewsQuery, PaginatedResult<ReviewDto>>
 {
     private readonly IRepository<Review> _repository;
     private readonly IMapper _mapper;
@@ -17,9 +18,16 @@ public class GetAllReviewsQueryHandler : IRequestHandler<GetAllReviewsQuery, IEn
         _mapper = mapper;
     }
 
-    public async Task<IEnumerable<ReviewDto>> Handle(GetAllReviewsQuery request, CancellationToken cancellationToken)
+    public async Task<PaginatedResult<ReviewDto>> Handle(GetAllReviewsQuery request, CancellationToken cancellationToken)
     {
-        var reviews = await _repository.GetAllAsync();
-        return _mapper.Map<IEnumerable<ReviewDto>>(reviews);
+        var (data, totalCount) = await _repository.GetPagedAsync(request.PageNumber, request.PageSize);
+
+        return new PaginatedResult<ReviewDto>
+        {
+            Data = _mapper.Map<IEnumerable<ReviewDto>>(data),
+            PageNumber = request.PageNumber,
+            PageSize = request.PageSize,
+            TotalCount = totalCount
+        };
     }
 }
