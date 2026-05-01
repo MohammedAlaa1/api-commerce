@@ -1,4 +1,5 @@
 using ECommerce.Application.Helpers;
+using ECommerce.Application.Interfaces;
 using ECommerce.Application.Resources.Categories;
 using ECommerce.Domain.Entities;
 using ECommerce.Domain.Interfaces;
@@ -9,10 +10,12 @@ namespace ECommerce.Application.Features.Categories.Commands.DeleteCategory;
 public class DeleteCategoryHandler : IRequestHandler<DeleteCategoryCommand, string>
 {
     private readonly IRepository<Category> _repository;
+    private readonly ICacheService _cacheService;
 
-    public DeleteCategoryHandler(IRepository<Category> repository)
+    public DeleteCategoryHandler(IRepository<Category> repository, ICacheService cacheService)
     {
         _repository = repository;
+        _cacheService = cacheService;
     }
 
     public async Task<string> Handle(DeleteCategoryCommand request, CancellationToken cancellationToken)
@@ -24,6 +27,7 @@ public class DeleteCategoryHandler : IRequestHandler<DeleteCategoryCommand, stri
 
         _repository.Delete(category);
         await _repository.SaveChangesAsync();
+        await _cacheService.RemoveAsync("categories_1_10");
 
         return LocalizerHelper.GetMessage(CategoryValidationMessages.DeletedSuccessfully);
     }

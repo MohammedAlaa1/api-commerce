@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using ECommerce.Application.DTOs;
+using ECommerce.Application.Interfaces;
 using ECommerce.Domain.Entities;
 using ECommerce.Domain.Interfaces;
 using MediatR;
@@ -10,11 +11,13 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Produc
 {
     private readonly IRepository<Product> _repository;
     private readonly IMapper _mapper;
+    private readonly ICacheService _cacheService;
 
-    public CreateProductHandler(IRepository<Product> repository, IMapper mapper)
+    public CreateProductHandler(IRepository<Product> repository, IMapper mapper, ICacheService cacheService)
     {
         _repository = repository;
         _mapper = mapper;
+        _cacheService = cacheService;
     }
 
     public async Task<ProductDto> Handle(CreateProductCommand request, CancellationToken cancellationToken)
@@ -24,6 +27,7 @@ public class CreateProductHandler : IRequestHandler<CreateProductCommand, Produc
 
         await _repository.AddAsync(product);
         await _repository.SaveChangesAsync();
+        await _cacheService.RemoveAsync("products_1_10");
 
         return _mapper.Map<ProductDto>(product);
     }
